@@ -100,7 +100,7 @@ Le devoir doit être rédigé \textbf{individuellement} et à l'\textbf{ordinate
 \begin{questions}
 
 % Tore
-\question
+\question[20]
 Un tore $T(R,r)$ est une surface qui peut être paramétrée par la fonction
 $$\vec{s}(u,v) = ((R + r\cos v) \cos u, (R + r\cos v) \sin u, r\sin v),$$
 où $r$ est le rayon du petit cercle qui engendre le tore et $R$ est la distance entre le centre du tube et le centre du tore. Donnez le pseudocode (ou écrivez un programme) qui prend un point quelconque $(x,y,z)$ de l'espace et qui retourne une des deux valeurs suivantes~:
@@ -114,7 +114,7 @@ Ajouter votre solution ici
 \end{solution}
 
 % Lancer de rayon
-\question
+\question[20]
 Considérez une scène contenant les éléments suivants~:
 \begin{itemize}
   \item Un cube centré en $(0,0,0)$ dont les côtés mesurent $10$ unités;
@@ -130,7 +130,7 @@ Ajouter votre solution ici
 \end{solution}
 
 % Détection de collisions
-\question
+\question[25]
 Une boule $B$ de centre $(x,y,z)$ et de rayon $r$ évolue dans une scène fermée $S$ de la forme $(h \pm a,k \pm b,\ell \pm c)$ qui contient $n$ plateformes $P_i$ de la forme $(h_i \pm a_i,k_i \pm b_i,\ell_i \pm c_i)$, pour $i = 1,2,\ldots,n$, où $(h_i,k_i,\ell_i)$ est le centre de la plateforme $P_i$, et $(a_i,b_i,c_i)$ est un triplet décrivant la longueur d'un demi-côté de la plateforme $P_i$.
 
 Donnez le pseudocode d'une fonction
@@ -144,14 +144,14 @@ Ajouter votre solution ici
 \question
 L'objectif de cette question est de concevoir une texture 3D et de l'appliquer à un modèle. Vous devez utiliser le moteur de rendu \emph{Cycles} du logiciel Blender.
 \begin{parts}
-  \part[20] Dans un premier temps, concevez un modèle en deux versions~:
+  \part[10] Dans un premier temps, concevez un modèle en deux versions~:
   \begin{itemize}
     \item Une première version avec un niveau de détails élevé, en utilisant le mode ``Sculpt'' de Blender;
     \item Une seconde version avec un niveau de détails plus bas. Ce deuxième modèle devrait être créé après le premier. Il existe plusieurs façons de créer une version avec moins de polygones (voir par exemple \href{http://blender.stackexchange.com/questions/6253/how-to-convert-from-high-poly-to-low-poly}{\color{orange}cette discussion}).
   \end{itemize}
   Ensuite, à l'aide de Blender, générez l'image des normales (\textit{normal map}) avec l'opération ``Bake'' du modèle le plus détaillé. Présentez vos modèles ainsi que l'image des normales.
-  \part[20] Ensuite, créez une texture de façon procédurale (par exemple, du marbre, du bois, de l'écorce d'arbre, du métal, etc.) à l'aide du ``Node Editor'' de Blender et présentez le résultat.
-  \part[20] Toujours avec l'éditeur de noeuds, appliquez votre texture au modèle le moins détaillé en prenant en compte l'image des normales. Présentez le graphe de noeuds vous permettant de générer votre texture. N'hésitez pas à ajouter (c'est optionnel) des noeuds qui tiennent compte des reflets de lumière (\textit{glossy} ou encore \textit{ambiant occlusion map}).
+  \part[10] Ensuite, créez une texture de façon procédurale (par exemple, du marbre, du bois, de l'écorce d'arbre, du métal, etc.) à l'aide du ``Node Editor'' de Blender et présentez le résultat.
+  \part[15] Toujours avec l'éditeur de noeuds, appliquez votre texture au modèle le moins détaillé en prenant en compte l'image des normales. Présentez le graphe de noeuds vous permettant de générer votre texture. N'hésitez pas à ajouter (c'est optionnel) des noeuds qui tiennent compte des reflets de lumière (\textit{glossy} ou encore \textit{ambiant occlusion map}).
 \end{parts}
 N'oubliez pas de citer vos sources.
 \begin{solution}
