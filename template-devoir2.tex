@@ -80,7 +80,7 @@
   \centerline{\large\underline{\textbf{Solution du devoir 2}}}
   \vskip 0.5cm
   \begin{mdframed} \begin{center}
-  \textbf{Auteur : Alexandre Blondin Massé} \\
+  \textbf{Auteur : Alexis Valois-Adamowicz - VALA10049105} \\
   \end{center} \end{mdframed}
   \vskip 0.5cm
 \else
@@ -110,7 +110,19 @@ où $r$ est le rayon du petit cercle qui engendre le tore et $R$ est la distance
 \end{itemize}
 N'hésitez pas à consulter des références pour vous aider à répondre à cette question, mais n'oubliez pas de citer vos sources.
 \begin{solution}
-Ajouter votre solution ici
+    \begin{algorithmic}[1]
+    \Function{NormalTore}{$x,y,z,R,r$ : réels} : {vecteur} \\
+    \Comment{Formules de la forme Cartésienne insipirées de : https://fr.wikipedia.org/wiki/Tore}
+    \If{$(\sqrt{x^2 + y^2} - R)^2 + z^2 - r^2$ != 0} 
+      \State \textbf{return} $\overrightarrow{0}$
+    \Else
+      \Comment{Le gradient est obtenu en dérivant, par rapport à x, y et z, la forme suivante du Tore : $x^4 + y^4 + z^4 - R^4 - r^4 - 4R^2(r^2-z^2) = 0$}
+      \State $gradient \gets (4*x^3,4*y^3,4*z^3)$
+      \State $norme \gets \sqrt{(4*x^3)^2 + (4*y^3)^2 + (4*z^3)^2}$
+      \State \textbf{return} $ \left( \frac{gradient}{norme} \right)$
+    \EndIf
+    \EndFunction
+    \end{algorithmic}
 \end{solution}
 
 % Lancer de rayon
