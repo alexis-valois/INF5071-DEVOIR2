@@ -170,6 +170,26 @@ Un rayon est lancé à partir du point $(0,4,4)$ en direction du point $(3,0,0)$
 
     \Function{CollisionSphere}{$s:Sphere, orient, depart:vecteur$} : {Pair(Point, Vecteur)} \\
     \Comment{Formule de la distance entre un point et une sphère insipiré de : \url{https://en.wikipedia.org/wiki/Line-sphere_intersection} }
+      \State $l \gets \left( \frac{orient}{\sqrt{orient.x^2 + orient.y^2 + orient.z^2}} \right)$
+      \State $o \gets depart$
+      \State $c \gets s.centre$
+      \State $r \gets s.rayon$
+      \State $c' \gets (l *(o-c))^2 - \Vert o-c \Vert^2 + r^2 $
+       \If{$(c' < 0)$} 
+        \State \textbf{return} $\emptyset$
+       \Else
+          \State $d_1 \gets -(l * (o-c) + \sqrt{c'})$
+          \State $d_2 \gets -(l * (o-c) - \sqrt{c'})$
+          \State $p \gets \emptyset$
+          \If{$(d_1 < d_2)$} 
+            \State $p \gets \Call{TrouverPointDroite}{depart, orient, d_1}$
+          \Else
+            \State $p \gets \Call{TrouverPointDroite}{depart, orient, d_2}$
+          \EndIf
+          \State $n \gets \Call{NormalSphere}{s, p}$
+          \State $reflected \gets \Call{Reflect}{orient, n}$
+          \State \textbf{return} $Pair(p, reflected)$
+       \EndIf
     \EndFunction
   \end{algorithmic}
 \end{solution}
