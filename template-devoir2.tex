@@ -112,7 +112,7 @@ N'hésitez pas à consulter des références pour vous aider à répondre à cet
 \begin{solution}
     \begin{algorithmic}[1]
     \Function{NormalTore}{$x,y,z,R,r$ : réels} : {vecteur} \\
-    \Comment{Formules de la forme Cartésienne insipirées de : https://fr.wikipedia.org/wiki/Tore}
+    \Comment{Formules de la forme Cartésienne insipirées de : \url{https://fr.wikipedia.org/wiki/Tore} }
     \If{$(\sqrt{x^2 + y^2} - R)^2 + z^2 - r^2$ != 0} 
       \State \textbf{return} $\overrightarrow{0}$
     \Else
@@ -138,7 +138,40 @@ Un rayon est lancé à partir du point $(0,4,4)$ en direction du point $(3,0,0)$
   \item En présentant un programme dans le langage de votre choix qui effectue le calcul.
 \end{itemize}
 \begin{solution}
-Ajouter votre solution ici
+  \begin{algorithmic}[2]
+    \Function{Reflect}{$V,N$ : vecteurs} : {vecteur} \\
+      \Comment{Formule de la réflection d'un vecteur insipiré de : \url{http://www.3dkingdoms.com/weekly/weekly.php?a=2} }
+      \State $prod \gets (V.x * N.x) + (V.y * N.y) + (V.z * N.z) $
+      \State $projection \gets (prod * N.x, prod * N.y, prod * N.z) $
+      \State $refl \gets 2 * projection - V$
+      \State \textbf{return} $refl$
+    \EndFunction
+
+    \Function{NormalSphere}{$s:Sphere, p:Point$} : {vecteur} \\
+      \State $x \gets p.x$
+      \State $y \gets p.y$
+      \State $z \gets p.z$
+      \State $h \gets s.centre.x$
+      \State $l \gets s.centre.y$
+      \State $k \gets s.centre.z$
+      \Comment{Le gradient est obtenu en dérivant, par rapport à x, y et z, la forme suivante de la Sphere : $(x-h)^2 + (y-l)^2 + (z-k)^2$}
+      \State $gradient \gets (2(x-h), 2(y-l), 2(z-k))$
+      \State $norme \gets \sqrt{(2(x-h)^2 + 2(y-l)^2 + 2(z-k)^2}$
+      \State \textbf{return} $ \left( \frac{gradient}{norme} \right)$
+    \EndFunction
+
+    \Function{TrouverPointDroite}{$p:Point, orient:vecteur, d:reel$} : {Point} \\
+      \State $norme \gets \sqrt{orient.x^2 + orient.y^2 + orient.z^2}$
+      \State $orientUnitaire \gets \left( \frac{orient}{norme} \right)$
+      \State $transl \gets orientUnitaire * d$
+      \State $nouvPoint \gets p + transl$
+      \State \textbf{return} $nouvPoint$
+    \EndFunction
+
+    \Function{CollisionSphere}{$s:Sphere, orient, depart:vecteur$} : {Pair(Point, Vecteur)} \\
+    \Comment{Formule de la distance entre un point et une sphère insipiré de : \url{https://en.wikipedia.org/wiki/Line-sphere_intersection} }
+    \EndFunction
+  \end{algorithmic}
 \end{solution}
 
 % Détection de collisions
