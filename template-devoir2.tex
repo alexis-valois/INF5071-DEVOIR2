@@ -191,6 +191,14 @@ Un rayon est lancé à partir du point $(0,4,4)$ en direction du point $(3,0,0)$
           \State \textbf{return} $Pair(p, reflected)$
        \EndIf
     \EndFunction
+
+    \Function{Distance}{$p_1, p_2 : point}:{reel}$
+      \State $\Delta X \gets p_2.x - p_1.x$
+      \State $\Delta Y \gets p_2.y - p_1.y$
+      \State $\Delta Z \gets p_2.z - p_1.z$
+      \State $d \gets \sqrt{\Delta X^2 + \Delta Y^2 + \Delta Z^2}$
+      \State \textbf{return} $d$
+    \EndFunction
   \end{algorithmic}
 \end{solution}
 
