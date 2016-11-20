@@ -199,6 +199,23 @@ Un rayon est lancé à partir du point $(0,4,4)$ en direction du point $(3,0,0)$
       \State $d \gets \sqrt{\Delta X^2 + \Delta Y^2 + \Delta Z^2}$
       \State \textbf{return} $d$
     \EndFunction
+
+    \Function{CollisionFace}{$depart:Point, orient:Vecteur, f:Face}:{Point}$ \\
+      \Comment{Formule de la distance entre un point et un plan insipiré de : \url{https://en.wikipedia.org/wiki/Line-plane_intersection} }
+      \State $P_0 \gets f.centre$
+      \State $n \gets f.normal$
+      \State $l \gets orient$
+      \State $L_0 \gets depart$
+
+      \State $proj \gets (l.x * n.x) + (l.y * n.y) + (l.z * n.z)$
+
+      \If{$(proj == 0)$} 
+        \State \textbf{return} $\emptyset$
+      \Else
+        \State $d \gets \left( \frac{(P_0 - L_0) * n}{proj} \right)$
+        \State \textbf{return} $\Call{TrouverPointDroite}{depart, orient, d}$
+      \EndIf
+    \EndFunction
   \end{algorithmic}
 \end{solution}
 
