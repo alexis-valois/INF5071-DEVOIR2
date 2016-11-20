@@ -216,6 +216,17 @@ Un rayon est lancé à partir du point $(0,4,4)$ en direction du point $(3,0,0)$
         \State \textbf{return} $\Call{TrouverPointDroite}{depart, orient, d}$
       \EndIf
     \EndFunction
+
+    \Function{CollisionCube}{$c:Cube, depart:Point, orient:Vecteur$} : {Pair(Point, Vecteur)}
+      \For{$f:Face$ incluses dans $c.faces$}
+        \State  $intersect \gets \Call{CollisionFace}{depart, orient, f}$
+        \If{$intersect != 0$}
+           \Comment{Normales pour un Cube (par inférence déductive) : (0,0,1) (0,0,-1) (0,1,0) (0,-1,0) (1,0,0) (-1,0,0)}
+           \State \textbf{return} $Pair(intersect, \Call{Reflect}{intersect, f.normal})$
+        \EndIf
+      \EndFor
+      \State \textbf{return} $\emptyset$
+    \EndFunction
   \end{algorithmic}
 \end{solution}
 
