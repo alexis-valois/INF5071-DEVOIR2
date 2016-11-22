@@ -274,8 +274,9 @@ Donnez le pseudocode d'une fonction
 qui retourne vrai si et seulement si la boule $B$ est en collision avec une des parois de la scène $S$ ou une des plateformes contenues dans $P$. N'oubliez pas de citer vos sources. \emph{Aide~:} Théorème des axes séparants.
 \begin{solution}
  \begin{algorithmic}[3] \\
- \Comment{Sources pour cette question : \url{http://} \url{http://} \url{http://}}
- \State $NormalBox[] \gets [(1,0,0),(0,1,0),(0,0,1)]$
+ \Comment{Sources pour cette question : \url{http://www.sevenson.com.au/actionscript/sat/} \url{https://research.ncl.ac.uk/game/mastersdegree/gametechnologies/physics7separatingaxistheorem-part2/Tutorial 7 - Separating Axis Theorem Part 2.pdf} \url{https://research.ncl.ac.uk/game/mastersdegree/gametechnologies/physics6separatingaxistheorem-part1/Tutorial 6 - Separating Axis Theorem Part 1.pdf}}
+ \State $NormalPlateforme[] \gets [(1,0,0),(0,1,0),(0,0,1)]$
+ \State $NormalScene[] \gets [(-1,0,0),(0,-1,0),(0,0,-1)]$
 
  \Function{TrouverAxeBoule}{B:boule, p:Plateforme}:Vecteur
   \State $P_min \gets \overrightarrow{0}$
@@ -289,6 +290,49 @@ qui retourne vrai si et seulement si la boule $B$ est en collision avec une des 
     \EndIf
   \EndFor
   \State \textbf{return} $ \left( \frac{(P_min - Centre_B)}{\Vert P_min - Centre_B \Vert} \right)$
+ \EndFunction
+
+ \Function{ProjectBox}{p:Plateforme, a:Vecteur, NormalBox:Vecteur[]}:Reel
+  \State $Proj_larg \gets \mid (p.a * NormalBox[0] * a) \mid $
+  \State $Proj_prof \gets \mid (p.b * NormalBox[1] * a) \mid $
+  \State $Proj_haut \gets \mid (p.c * NormalBox[2] * a) \mid $
+  \State \textbf{return} $ Proj_larg + Proj_prof + Proj_haut $
+ \EndFunction
+
+ \Function{ProjectCentre}{B:boule, p:Plateforme, a: Vecteur}:Reel
+  \State $Centre_B \gets (B.x, B.y, B.z)$
+  \State $Centre_P \gets (p.h, p.k, p.l)$
+  \State $V \gets (Centre_B - Centre_P)$
+  \State \textbf{return} $ (V * a) $
+ \EndFunction
+
+ \Function{ColisionBouleBox}{B:boule, p:Plateforme, NormalBox:Vecteur[]}:Booléen
+  \State $ListeAxes \gets \emptyset$
+  \State $AxeBoule \gets \Call{TrouverAxeBoule}{B,p} $
+  \State $AxesPlateforme \gets \Call{TrouverAxesPlateforme}{p} $
+  \State \Call{ListeAxes.add}{AxeBoule}
+  \State \Call{ListeAxes.add}{AxesPlateforme}
+  \For{$a:Vecteur \in ListeAxes$}
+    \State $ Proj_S \gets B.r $
+    \State $ Proj_P \gets \Call{ProjectBox}{p,a,NormalBox} $
+    \State $ Dist \gets \Call{ProjectCentres}{B,p,a} $
+    \If{$(Dist - Proj_S - Proj_P) > 0$}
+      \State \textbf{return} Faux
+    \EndIf 
+  \EndFor
+  \State \textbf{return} Vrai
+ \EndFunction
+
+ \Function{Collision}{B:boule, S:scene, P: Liste de plateformes} : Booléen
+  \For{$p:Plateforme \in P$}
+    \If{$\Call{ColisionBouleBox}{B,p, NormalPlateforme}$}
+       \State \textbf{return} Vrai
+    \EndIf
+  \EndFor
+
+  \If{$\Call{ColisionBouleBox}{B,p, NormalScene}$}
+    \State \textbf{return} Vrai
+  \EndIf
  \EndFunction
 
  \end{algorithmic}
