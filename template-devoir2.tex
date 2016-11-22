@@ -191,6 +191,77 @@ Un rayon est lancé à partir du point $(0,4,4)$ en direction du point $(3,0,0)$
           \State \textbf{return} $Pair(p, reflected)$
        \EndIf
     \EndFunction
+
+    \Function{Distance}{$p_1, p_2 : point}:{reel}$
+      \State $\Delta X \gets p_2.x - p_1.x$
+      \State $\Delta Y \gets p_2.y - p_1.y$
+      \State $\Delta Z \gets p_2.z - p_1.z$
+      \State $d \gets \sqrt{\Delta X^2 + \Delta Y^2 + \Delta Z^2}$
+      \State \textbf{return} $d$
+    \EndFunction
+
+    \Function{CollisionFace}{$depart:Point, orient:Vecteur, f:Face}:{Point}$ \\
+      \Comment{Formule de la distance entre un point et un plan insipiré de : \url{https://en.wikipedia.org/wiki/Line-plane_intersection} }
+      \State $P_0 \gets f.centre$
+      \State $n \gets f.normal$
+      \State $l \gets orient$
+      \State $L_0 \gets depart$
+
+      \State $proj \gets (l.x * n.x) + (l.y * n.y) + (l.z * n.z)$
+
+      \If{$(proj == 0)$} 
+        \State \textbf{return} $\emptyset$
+      \Else
+        \State $d \gets \left( \frac{(P_0 - L_0) * n}{proj} \right)$
+        \State \textbf{return} $\Call{TrouverPointDroite}{depart, orient, d}$
+      \EndIf
+    \EndFunction
+
+    \Function{CollisionCube}{$c:Cube, depart:Point, orient:Vecteur$}: {Pair(Point, Vecteur)}
+      \For{$f:Face$ incluses dans $c.faces$}
+        \State $intersect \gets \Call{CollisionFace}{depart, orient, f}$
+        \If{$intersect != 0$}
+           \Comment{Normales pour un Cube (par inférence déductive) : (0,0,1) (0,0,-1) (0,1,0) (0,-1,0) (1,0,0) (-1,0,0)}
+           \State \textbf{return} $Pair(intersect, \Call{Reflect}{intersect, f.normal})$
+        \EndIf
+      \EndFor
+      \State \textbf{return} $\emptyset$
+    \EndFunction
+
+    \Procedure{Main}{}
+      \State $c \gets \Call{new Cube}{0,0,0,10,10}$
+      \State $S_1 \gets \Call{new Cube}{3,0,0,2}$
+      \State $S_2 \gets \Call{new Cube}{-3,0,0,2}$
+      \State $scene \gets \Call{new Scene}{c, S_1, S_2}$
+      \State $depart \gets (0,4,4)$
+      \State $orient \gets (3,0,0)$
+      \For{$i \gets 1 .. 5$}
+        \State $d_1 \gets \Call{Distance}{S_1.centre, depart}$
+        \State $d_2 \gets \Call{Distance}{S_2.centre, depart}$
+
+        \If{$d_1 < d_2$}
+          \State $suivant \gets \Call{CollisionSphere}{S_1, depart, orient}$
+          \If{$suivant != \emptyset$} \\
+            \Call{scene.TracerRayon}{depart, suivant.p}
+            \State $depart \gets suivant.p$
+            \State $orient \gets suivant.v$
+            \State \Call{continue}{}
+          \EndIf
+        \Else
+          \State $suivant \gets \Call{CollisionSphere}{S_2, depart, orient}$
+          \If{$suivant != \emptyset$} \\
+            \Call{scene.TracerRayon}{depart, suivant.p}
+            \State $depart \gets suivant.p$
+            \State $orient \gets suivant.v$
+            \State \Call{continue}{}
+          \EndIf
+        \EndIf
+        \State $suivant \gets \Call{CollisionCube}{c, depart, orient}$
+        \Call{scene.TracerRayon}{depart, suivant.p}
+        \State $depart \gets suivant.p$
+        \State $orient \gets suivant.v$
+      \EndFor
+    \EndProcedure
   \end{algorithmic}
 \end{solution}
 
