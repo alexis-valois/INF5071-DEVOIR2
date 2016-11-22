@@ -202,7 +202,25 @@ Donnez le pseudocode d'une fonction
 \entetefunc{Collision}{$B$ : boule, $S$ : scène, $P$ : liste de plateformes} : booléen
 qui retourne vrai si et seulement si la boule $B$ est en collision avec une des parois de la scène $S$ ou une des plateformes contenues dans $P$. N'oubliez pas de citer vos sources. \emph{Aide~:} Théorème des axes séparants.
 \begin{solution}
-Ajouter votre solution ici
+ \begin{algorithmic}[3] \\
+ \Comment{Sources pour cette question : \url{http://} \url{http://} \url{http://}}
+ \State $NormalBox[] \gets [(1,0,0),(0,1,0),(0,0,1)]$
+
+ \Function{TrouverAxeBoule}{B:boule, p:Plateforme}:Vecteur
+  \State $P_min \gets \overrightarrow{0}$
+  \State $dist \gets +\infty$
+  \State $Sommet_B[] \gets \forall (x,y,z) \Rightarrow x \in p.h \pm p.a, y \in p.l \pm p.b , z \in p.k \pm p.c$
+  \State $Centre_B \gets (B.x, B.y, B.z)$
+  \For{$s: Point \in Sommets_B$}
+    \If{\Call{Distance}{$Centre_B, s$} \l $dist$}
+      \State $P_min \gets s$
+      \State $dist \gets \Call{Distance}{Centre_B, s}$ 
+    \EndIf
+  \EndFor
+  \State \textbf{return} $ \left( \frac{(P_min - Centre_B)}{\Vert P_min - Centre_B \Vert} \right)$
+ \EndFunction
+
+ \end{algorithmic}
 \end{solution}
 
 % Texture 3D
